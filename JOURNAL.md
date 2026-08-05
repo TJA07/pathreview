@@ -24,7 +24,7 @@ I need to locate the specific API controller/route that initializes a new review
 None at the moment.
 
 ### Check-in 2 (end of week)
-**PR link:** [Paste your GitHub PR URL here]
+**PR link:** (https://github.com/ascherj/pathreview/pull/922)
 **Branch:** fix/43-clear-session-state
 **What you built:**
 I fixed the issue where the AI agent's session state leaked between reviews for the same user. I updated `api/routes/reviews.py` to directly connect to Redis and delete the user's specific session cache key (`session:{current_user.id}`) immediately before a new review is initialized. This ensures the agent always starts with a completely blank memory slate.
