@@ -29,6 +29,6 @@ None at the moment.
 **What you built:**
 I fixed the issue where the AI agent's session state leaked between reviews for the same user. I updated `api/routes/reviews.py` to directly connect to Redis and delete the user's specific session cache key (`session:{current_user.id}`) immediately before a new review is initialized. This ensures the agent always starts with a completely blank memory slate.
 **Tests added or updated:**
-Relied on existing test coverage and manual end-to-end testing (confirmed back-to-back reviews now start with clean state).
+Added a new test file `tests/unit/test_issue_43.py`. It uses `@patch` to mock the Redis client and verifies that `create_review_endpoint` successfully calls `Redis.delete("session:<user_id>")` exactly once before creating the review.
 **Self-review confirmation:** [x] make check passes  [x] make test-unit passes
 **Draft PR feedback received from:** none
