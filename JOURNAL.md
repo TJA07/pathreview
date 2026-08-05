@@ -10,3 +10,25 @@ Currently, when a user conducts multiple reviews, the agent's session state is p
 **Branch name:** fix/43-clear-session-state
 **Setup confirmation:** [x] App runs locally at localhost:5173
 **Cohort ledger:** [x] Issue added to cohort ledger
+
+## Week 9 — Solution building & PR submission
+
+### Check-in 1 (mid-week)
+**Current progress:**
+I have successfully set up the local environment, reproduced the session leakage issue (#43), and written out my implementation plan. I identified `session_storage.py` and its `SessionStore.delete()` method as the tool I will use to clear the state.
+
+**Next steps:**
+I need to locate the specific API controller/route that initializes a new review, inject the cache deletion logic into it, write/update unit tests to ensure it works, and run `make check`.
+
+**Blockers:**
+None at the moment.
+
+### Check-in 2 (end of week)
+**PR link:** [Paste your GitHub PR URL here]
+**Branch:** fix/43-clear-session-state
+**What you built:**
+I fixed the issue where the AI agent's session state leaked between reviews for the same user. I updated `api/routes/reviews.py` to directly connect to Redis and delete the user's specific session cache key (`session:{current_user.id}`) immediately before a new review is initialized. This ensures the agent always starts with a completely blank memory slate.
+**Tests added or updated:**
+Relied on existing test coverage and manual end-to-end testing (confirmed back-to-back reviews now start with clean state).
+**Self-review confirmation:** [x] make check passes  [x] make test-unit passes
+**Draft PR feedback received from:** none
